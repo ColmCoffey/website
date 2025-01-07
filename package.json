@@ -16,6 +16,7 @@
     "caniuse-lite": "^1.0.30001690",
     "chrome-trace-event": "^1.0.4",
     "clone-deep": "^4.0.1",
+    "clsx": "^2.1.1",
     "colorette": "^2.0.20",
     "commander": "^2.20.3",
     "common-path-prefix": "^3.0.0",
