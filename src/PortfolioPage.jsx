@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
-import { Github, Linkedin, Mail, Download, X } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 import './index.css';
 
 const PortfolioPage = () => {
@@ -20,32 +20,58 @@ const PortfolioPage = () => {
 
   const projects = [
     {
+      title: 'Microservice Architecture',
+      description: 'Modular serverless microservices architecture for scalable healthcare applications.',
+      image: '/assets/AWS Schema Image.png',
+      tags: ['AWS', 'Microservices', 'DevOps'],
+      githubLink: 'https://github.com/ColmCoffey/Modular-Architecture-Serverless-Microservices'
+    },
+    {
+      title: 'Deploy WebApp with Amplify 2',
+      description: 'Deploying a Serverless Web App with GitHub, React, and AWS Amplify.',
+      image: '/assets/AWS Schema Image.png',
+      tags: ['AWS', 'React', 'DevOps'],
+      githubLink: 'https://github.com/ColmCoffey/website'
+    },
+    {
+      title: 'BedRock RAG',
+      description: 'Guide: Create Knowledgebase with Bedrock.',
+      image: '/assets/Bedrock.JPG',
+      tags: ['AWS', 'RAG', 'Knowledgebase'],
+      githubLink: 'AWS-Besrock-RAG/blob/main/README.md'
+    },
+    {
+      title: 'AI/ML Cybersecurity',
+      description: 'Data-In-Use Encryption in Neural Networks Federated Learning Architecture.',
+      image: '/assets/FederatedLearning.JPG',
+      tags: ['AI', 'ML', 'Cybersecurity'],
+      githubLink: 'https://github.com/ColmCoffey/CXR-Secure'
+    },
+    {
       title: 'SmoothOp App',
       description: 'A scheduling platform for operating theaters with real-time updates.',
       image: '/assets/SmoothOp.JPG',
-      tags: ['Healthcare', 'AWS', 'Vue']
+      tags: ['Healthcare', 'AWS', 'Vue'],
+      githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio'
     },
     {
       title: 'VRx Health',
       description: 'VR-based healthcare solution for remote consultations and early diagnosis.',
       image: '/assets/VRx_Health.JPG',
-      tags: ['VR', 'Telemedicine', 'AI']
+      tags: ['VR', 'Healthcare', 'AI'],
+      githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio'
     },
     {
       title: 'EndoDetect',
       description: 'Minimally invasive diagnostic tool for endometriosis.',
       image: '/assets/Endodetect.JPG',
-      tags: ['Medical Device', 'ML', 'Diagnostics']
-    },
-    {
-      title: 'Microservice Architecture',
-      description: 'Modular serverless microservices architecture for scalable healthcare applications.',
-      image: '/assets/AWS Schema Image.png',
-      tags: ['AWS Lambda', 'Microservices', 'DevOps']
+      tags: ['Diagnostics', 'Healthcare', 'ML'],
+      githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio'
     }
   ];
-
-  const tags = ['All', 'Healthcare', 'AI', 'AWS', 'ML', 'Diagnostics', 'DevOps'];
+  
+  const tags = ['All', 'Healthcare', 'AI', 'AWS', 'ML', 'Diagnostics', 'DevOps', 'React', 'RAG', 'Cybersecurity', 'VR', 'Vue'];
+  
 
   const filteredProjects = selectedTag === 'All' ? projects : projects.filter(project => project.tags.includes(selectedTag));
 
@@ -61,6 +87,7 @@ const PortfolioPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header */}
       <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center mb-6 md:mb-0">
@@ -74,16 +101,17 @@ const PortfolioPage = () => {
             </div>
           </div>
           <div className="flex space-x-4">
-            <a href="https://github.com/yourprofile" target="_blank" rel="noopener noreferrer" className="social-icon github">
+            <a href="https://github.com/ColmCoffey" target="_blank" rel="noopener noreferrer" className="social-icon github">
               <Github className="w-5 h-5 md:w-6 md:h-6" />
             </a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
+            <a href="https://www.linkedin.com/in/colm-coffey/" target="_blank" rel="noopener noreferrer" className="social-icon linkedin">
               <Linkedin className="w-5 h-5 md:w-6 md:h-6" />
             </a>
           </div>
         </div>
       </header>
 
+      {/* Filter Section */}
       <section className="py-6 bg-gray-100 text-center">
         <h3 className="text-lg font-semibold mb-4">Filter Projects</h3>
         <div className="flex flex-wrap justify-center gap-2">
@@ -99,6 +127,7 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Projects Grid */}
       <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 py-8">
         {filteredProjects.map(project => (
           <Card key={project.title} className="card-container" onClick={() => openModal(project)}>
@@ -118,6 +147,38 @@ const PortfolioPage = () => {
         ))}
       </main>
 
+      {showModal && (
+  <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="modal-content bg-white p-6 rounded-lg shadow-lg max-w-lg relative">
+      <button
+        onClick={closeModal}
+        className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
+      >
+        X
+      </button>
+      <h2 className="text-2xl font-bold mb-4">{currentProject?.title}</h2>
+      <p className="mb-4">{currentProject?.description}</p>
+      <img
+        src={currentProject?.image}
+        alt={currentProject?.title}
+        className="rounded-lg mt-4 w-full"
+      />
+      <div className="mt-6 flex justify-end">
+        <button
+          onClick={() => window.open(currentProject?.githubLink, '_blank')}
+          className="btn-primary"
+        >
+          Read More
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+
+      {/* Footer */}
       <footer className="bg-gray-800 text-white py-6 mt-12">
         <div className="max-w-6xl mx-auto text-center">
           <p>&copy; 2024 Colm Coffey. All Rights Reserved.</p>
