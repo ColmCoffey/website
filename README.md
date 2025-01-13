@@ -1,5 +1,8 @@
 # Deploying a Serverless Web App with GitHub, React, and AWS Amplify
 
+![aws_amplify_web_app_architecture](https://github.com/user-attachments/assets/e34058a6-fc2e-4719-b8a6-0afd65e9384c)
+
+
 ## Executive Summary
 This guide provides step-by-step instructions for deploying a serverless web application using React, GitHub, and AWS Amplify. It covers the setup process, configuration, and deployment steps. AWS Amplify simplifies Continuous Integration and Continuous Deployment (CI/CD) pipelines, providing seamless updates and scalability.
 
