@@ -29,16 +29,16 @@ const PortfolioPage = () => {
     {
       title: 'Deploy WebApp with Amplify 2',
       description: 'Deploying a Serverless Web App with GitHub, React, and AWS Amplify.',
-      image: '/assets/AWS Schema Image.png',
+      image: '/assets/aws_amplify_web_app_architecture.png',
       tags: ['AWS', 'React', 'DevOps'],
       githubLink: 'https://github.com/ColmCoffey/website'
     },
     {
       title: 'BedRock RAG',
       description: 'Guide: Create Knowledgebase with Bedrock.',
-      image: '/assets/Bedrock.JPG',
+      image: '/assets/rag_system_architecture.png',
       tags: ['AWS', 'RAG', 'Knowledgebase'],
-      githubLink: 'AWS-Besrock-RAG/blob/main/README.md'
+      githubLink: 'https://github.com/ColmCoffey/AWS-Bedrock-RAG'
     },
     {
       title: 'AI/ML Cybersecurity',
