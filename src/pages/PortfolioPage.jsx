@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Github, Linkedin } from 'lucide-react';
-import './index.css';
+import '../index.css';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,7 +14,7 @@ const PortfolioPage = () => {
 
   const handleDownloadCV = () => {
     const link = document.createElement('a');
-    link.href = '/assets/Colm_Coffey_CV.pdf';
+    link.href = '../assets/Colm_Coffey_CV.pdf';
     link.download = 'Colm_Coffey_CV.pdf';
     document.body.appendChild(link);
     link.click();
@@ -25,7 +25,7 @@ const PortfolioPage = () => {
     {
       title: 'Microservice Architecture',
       description: 'Modular serverless microservices architecture for scalable healthcare applications.',
-      image: '/assets/AWS Schema Image.png',
+      image: '../assets/AWS Schema Image.png',
       tags: ['AWS', 'Microservices', 'DevOps'],
       githubLink: 'https://github.com/ColmCoffey/Modular-Architecture-Serverless-Microservices',
       route: 'microservices'  // Add this line
@@ -33,7 +33,7 @@ const PortfolioPage = () => {
     {
       title: 'Deploy WebApp with Amplify 2',
       description: 'Deploying a Serverless Web App with GitHub, React, and AWS Amplify.',
-      image: '/assets/aws_amplify_web_app_architecture.png',
+      image: '../assets/aws_amplify_web_app_architecture.png',
       tags: ['AWS', 'React', 'DevOps'],
       githubLink: 'https://github.com/ColmCoffey/website',
       route: 'webapp'  // Add this line
@@ -42,7 +42,7 @@ const PortfolioPage = () => {
     {
       title: 'BedRock RAG',
       description: 'Guide: Create Knowledgebase with Bedrock.',
-      image: '/assets/rag_system_architecture.png',
+      image: '../assets/rag_system_architecture.png',
       tags: ['AWS', 'RAG', 'Knowledgebase'],
       githubLink: 'https://github.com/ColmCoffey/AWS-Bedrock-RAG',
       route: 'bedrock'  // Add this line
@@ -51,7 +51,7 @@ const PortfolioPage = () => {
     {
       title: 'AI/ML Cybersecurity',
       description: 'Data-In-Use Encryption in Neural Networks Federated Learning Architecture.',
-      image: '/assets/FederatedLearning.JPG',
+      image: '../assets/FederatedLearning.JPG',
       tags: ['AI', 'ML', 'Cybersecurity'],
       githubLink: 'https://github.com/ColmCoffey/CXR-Secure',
       route: 'federatedlearning'  // Add this line
@@ -60,7 +60,7 @@ const PortfolioPage = () => {
     {
       title: 'SmoothOp App',
       description: 'A scheduling platform for operating theaters with real-time updates.',
-      image: '/assets/SmoothOp.JPG',
+      image: '../assets/SmoothOp.JPG',
       tags: ['Healthcare', 'AWS', 'Vue'],
       githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio',
       route: 'smoothop'  // Add this line
@@ -69,7 +69,7 @@ const PortfolioPage = () => {
     {
       title: 'VRx Health',
       description: 'VR-based healthcare solution for remote consultations and early diagnosis.',
-      image: '/assets/VRx_Health.JPG',
+      image: '../assets/VRx_Health.JPG',
       tags: ['VR', 'Healthcare', 'AI'],
       githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio',
       route: 'vrxhealth'  // Add this line
@@ -77,7 +77,7 @@ const PortfolioPage = () => {
     {
       title: 'EndoDetect',
       description: 'Minimally invasive diagnostic tool for endometriosis.',
-      image: '/assets/Endodetect.JPG',
+      image: '../assets/Endodetect.JPG',
       tags: ['Diagnostics', 'Healthcare', 'ML'],
       githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio',
       route: 'endodetect'  // Add this line
@@ -106,7 +106,7 @@ const PortfolioPage = () => {
       <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center mb-6 md:mb-0">
-            <img src="/assets/logo.png" alt="Logo" className="h-8 md:h-10 lg:h-12 rounded-full bg-white p-1 shadow-lg mt-1" />
+            <img src="../assets/logo.png" alt="Logo" className="h-8 md:h-10 lg:h-12 rounded-full bg-white p-1 shadow-lg mt-1" />
             <div className="ml-4">
               <h1 className="text-4xl md:text-5xl font-bold mb-2">Colm Coffey</h1>
               <h2 className="text-lg md:text-xl mb-4 leading-relaxed">Solutions Architect & AI Developer</h2>
