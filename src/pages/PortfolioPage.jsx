@@ -24,11 +24,12 @@ const PortfolioPage = () => {
   const projects = [
 
     {
-      title: 'Demo: Deploy Custom RAG with AWS',
+      title: 'Custom RAG Deployment with AWS',
        description: 'Serverless RAG architecture for medical knowledge retrieval, specializing in Cervical Dystonia literature. Built with AWS Bedrock, ChromaDB, and FastAPI.',
        image: '../assets/DepRag_architecture.png',
        tags: ['AWS', 'RAG', 'Healthcare', 'AI', 'Serverless'],
       githubLink: 'https://github.com/colmcoffey/RAG-Deployment',
+      isInteractive: true,
       route: 'deprag',
     },
 
@@ -51,9 +52,9 @@ const PortfolioPage = () => {
     },
     {
       title: 'BedRock RAG',
-      description: 'Guide: Create Knowledgebase with Bedrock.',
+      description: 'Guide: Create Knowledge Base with Bedrock.',
       image: '../assets/rag_system_architecture.png',
-      tags: ['AWS', 'RAG', 'Knowledgebase'],
+      tags: ['AWS', 'RAG', 'Knowledge Base'],
       githubLink: 'https://github.com/ColmCoffey/AWS-Bedrock-RAG',
       route: 'bedrock'  // Add this line
 
@@ -153,24 +154,34 @@ const PortfolioPage = () => {
       </section>
 
       {/* Projects Grid */}
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 py-8">
-        {filteredProjects.map(project => (
-          <Card key={project.title} className="card-container" onClick={() => openModal(project)}>
-            <CardHeader>
-              <CardTitle>{project.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{project.description}</p>
-              <img src={project.image} alt={project.title} className="rounded-lg shadow-md mt-4 object-cover h-48 w-full" />
-              <div className="flex flex-wrap mt-4 space-x-2">
-                {project.tags.map(tag => (
-                  <span key={tag} className="tag">{tag}</span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </main>
+{/* Projects Grid */}
+{/* Projects Grid */}
+<main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 py-8">
+  {filteredProjects.map(project => (
+    <Card key={project.title} className="card-container" onClick={() => openModal(project)}>
+      <CardHeader>
+        <div className="flex justify-between items-start gap-2">
+          <CardTitle>{project.title}</CardTitle>
+          {project.isInteractive && (
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700 border border-indigo-200">
+              <span className="w-2 h-2 rounded-full bg-indigo-500 mr-2 animate-pulse"></span>
+              Interactive
+            </span>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent>
+        <p>{project.description}</p>
+        <img src={project.image} alt={project.title} className="rounded-lg shadow-md mt-4 object-cover h-48 w-full" />
+        <div className="flex flex-wrap mt-4 space-x-2">
+          {project.tags.map(tag => (
+            <span key={tag} className="tag">{tag}</span>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  ))}
+</main>
 
       {showModal && (
   <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
