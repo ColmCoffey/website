@@ -24,7 +24,7 @@ const PortfolioPage = () => {
   const projects = [
 
     {
-      title: 'Demo: Deploy RAG App on AWS',
+      title: 'Demo: Deploy Custom RAG with AWS',
        description: 'Serverless RAG architecture for medical knowledge retrieval, specializing in Cervical Dystonia literature. Built with AWS Bedrock, ChromaDB, and FastAPI.',
        image: '../assets/DepRag_architecture.png',
        tags: ['AWS', 'RAG', 'Healthcare', 'AI', 'Serverless'],
@@ -68,7 +68,7 @@ const PortfolioPage = () => {
 
     },
     {
-      title: 'SmoothOp App',
+      title: 'SmoothOp',
       description: 'A scheduling platform for operating theaters with real-time updates.',
       image: '../assets/SmoothOp.JPG',
       tags: ['Healthcare', 'AWS', 'Vue'],
