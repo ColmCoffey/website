@@ -121,7 +121,7 @@ const PortfolioPage = () => {
               <h1 className="text-4xl md:text-5xl font-bold mb-2">Colm Coffey</h1>
               <h2 className="text-lg md:text-xl mb-4 leading-relaxed">Solutions Architect & AI Developer</h2>
               <p className="text-gray-300 leading-relaxed">
-                Specializing in healthcare AI solutions and medical device security
+                Specializing in Cloud Architecture and AI/ML Applications
               </p>
             </div>
           </div>
