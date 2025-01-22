@@ -22,6 +22,16 @@ const PortfolioPage = () => {
   };
 
   const projects = [
+
+    {
+      title: 'Demo: Deploy RAG App on AWS',
+       description: 'Serverless RAG architecture for medical knowledge retrieval, specializing in Cervical Dystonia literature. Built with AWS Bedrock, ChromaDB, and FastAPI.',
+       image: '../assets/DepRag_architecture.png',
+       tags: ['AWS', 'RAG', 'Healthcare', 'AI', 'Serverless'],
+      githubLink: 'https://github.com/colmcoffey/RAG-Deployment',
+      route: 'deprag',
+    },
+
     {
       title: 'Microservice Architecture',
       description: 'Modular serverless microservices architecture for scalable healthcare applications.',
@@ -62,7 +72,7 @@ const PortfolioPage = () => {
       description: 'A scheduling platform for operating theaters with real-time updates.',
       image: '../assets/SmoothOp.JPG',
       tags: ['Healthcare', 'AWS', 'Vue'],
-      githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio',
+      githubLink: 'https://github.com/ColmCoffey/SmoothOp',
       route: 'smoothop'  // Add this line
 
     },
@@ -71,7 +81,7 @@ const PortfolioPage = () => {
       description: 'VR-based healthcare solution for remote consultations and early diagnosis.',
       image: '../assets/VRx_Health.JPG',
       tags: ['VR', 'Healthcare', 'AI'],
-      githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio',
+      githubLink: 'https://github.com/ColmCoffey/VRxHealth',
       route: 'vrxhealth'  // Add this line
     },
     {
@@ -79,7 +89,7 @@ const PortfolioPage = () => {
       description: 'Minimally invasive diagnostic tool for endometriosis.',
       image: '../assets/Endodetect.JPG',
       tags: ['Diagnostics', 'Healthcare', 'ML'],
-      githubLink: 'https://github.com/ColmCoffey/Medical-Device-Portfolio',
+      githubLink: 'https://github.com/ColmCoffey/endodetect',
       route: 'endodetect'  // Add this line
 
     }

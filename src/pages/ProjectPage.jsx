@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import RAGInterface from '../components/RAGInterface';
 import { cn } from "../components/ui/lib/utils";
 import 'github-markdown-css/github-markdown.css';
 import "../index.css";
@@ -13,6 +14,8 @@ const ProjectPage = ({ projectRoutes }) => {
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  const isInteractive = projectRoutes[projectId]?.isInteractive || false;
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -25,7 +28,6 @@ const ProjectPage = ({ projectRoutes }) => {
         const { githubRepo, markdownPath } = projectRoutes[projectId];
         const [_, owner, repo] = githubRepo.match(/github\.com\/([^/]+)\/([^/]+)/);
         
-        // Try main branch first, then master if main fails
         const branches = ['main', 'master'];
         let markdownContent = null;
         let fetchError = null;
@@ -37,7 +39,7 @@ const ProjectPage = ({ projectRoutes }) => {
             
             if (response.ok) {
               markdownContent = await response.text();
-              break; // Exit loop if successful
+              break;
             }
           } catch (err) {
             fetchError = err;
@@ -61,7 +63,6 @@ const ProjectPage = ({ projectRoutes }) => {
     fetchContent();
   }, [projectId, projectRoutes, navigate]);
 
-  // Header Component - extracted for cleaner rendering
   const Header = () => (
     <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
@@ -76,7 +77,6 @@ const ProjectPage = ({ projectRoutes }) => {
     </header>
   );
 
-  // Loading State
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -88,7 +88,6 @@ const ProjectPage = ({ projectRoutes }) => {
     );
   }
 
-  // Error State
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -108,44 +107,57 @@ const ProjectPage = ({ projectRoutes }) => {
     );
   }
 
-  // Success State
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="max-w-4xl mx-auto py-8 px-4 bg-white shadow-md rounded-lg mt-8">
-        <article className="markdown-body">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            children={content}
-            components={{
-              code({ node, inline, className, children, ...props }) {
-                const match = /language-(\w+)/.exec(className || "");
-                return !inline && match ? (
-                  <pre>
+      <Header />    
+      <main className="max-w-4xl mx-auto py-8 px-4">
+        {isInteractive && (
+          <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+            <div className="prose max-w-none mb-8">
+              <h2 className="text-2xl font-bold mb-4">Interactive RAG Demo</h2>
+              <p className="text-gray-600 mb-6">
+                Ask questions about our services and get instant answers powered by our AI knowledge base.
+              </p>
+            </div>
+            <RAGInterface />
+          </div>
+        )}
+        
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <article className="markdown-body">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+              children={content}
+              components={{
+                code({ node, inline, className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  return !inline && match ? (
+                    <pre>
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    </pre>
+                  ) : (
                     <code className={className} {...props}>
                       {children}
                     </code>
-                  </pre>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-              a: ({ node, ...props }) => (
-                <a 
-                  className="text-blue-600 hover:text-blue-800 hover:underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  {...props}
-                >
-                  {props.children}
-                </a>
-              ),
-            }}
-          />
-        </article>
+                  );
+                },
+                a: ({ node, ...props }) => (
+                  <a 
+                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...props}
+                  >
+                    {props.children}
+                  </a>
+                ),
+              }}
+            />
+          </article>
+        </div>
       </main>
 
       <footer className="text-center mt-8 pb-8">
