@@ -2,10 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProjectPage from './pages/ProjectPage';
-import PortfolioPage from "./PortfolioPage";
+import PortfolioPage from "./pages/PortfolioPage";
 
 // Project route configuration
 const projectRoutes = {
+  deprag: {
+    githubRepo: "https://github.com/ColmCoffey/RAG-Deployment",
+    markdownPath: "README.md",
+    isInteractive: true  // This should show RAG interface
+  },
   microservices: {
     githubRepo: "https://github.com/ColmCoffey/Modular-Architecture-Serverless-Microservices",
     markdownPath: "README.md"
@@ -23,15 +28,15 @@ const projectRoutes = {
     markdownPath: "README.md"
   },
   smoothop: {
-    githubRepo: "https://github.com/ColmCoffey/Medical-Device-Portfolio",
+    githubRepo: "https://github.com/ColmCoffey/SmoothOp",
     markdownPath: "README.md"
   },
   vrxhealth: {
-    githubRepo: "https://github.com/ColmCoffey/Medical-Device-Portfolio",
+    githubRepo: "https://github.com/ColmCoffey/VRxHealth",
     markdownPath: "README.md"
   },
   endodetect: {
-    githubRepo: "https://github.com/ColmCoffey/Medical-Device-Portfolio",
+    githubRepo: "https://github.com/ColmCoffey/endodetect",
     markdownPath: "README.md"
   }
 };
