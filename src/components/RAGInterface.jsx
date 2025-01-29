@@ -40,7 +40,7 @@ const EnhancedRAGInterface = () => {
   const [queryId, setQueryId] = useState('');
   const [queryHistory, setQueryHistory] = useState([]);
 
-  const API_ENDPOINT = 'https://f6yvsdra6kftb4v6skxcbtxuqe0fvlhc.lambda-url.eu-central-1.on.aws';
+  const API_ENDPOINT = 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws/';
 
   const submitQuery = async (queryText = query) => {
     if (!queryText.trim()) return;
