@@ -211,7 +211,7 @@ const EnhancedRAGInterface = () => {
                       <Copy className="h-4 w-4" />
                     </button>
                   </div>
-                  <p className="whitespace-pre-wrap text-gray-700">{result.answer}</p>
+                  <p className="whitespace-pre-wrap text-gray-700">{result.answer_text}</p>
                 </div>
 
                 {result.sources?.length > 0 && (
