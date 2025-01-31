@@ -1,0 +1,15 @@
+[33mc8242700[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m Add amplify.yml file for redirects
+[33m182d27a5[m fix: align answer field name with backend response
+[33m0dc3be06[m update API Endpoint
+[33m7df26ff5[m fix bug
+[33meb7fff0f[m update function URL
+[33m16eaf515[m fix bug
+[33mf2a17e1d[m add favicon
+[33mcb5530f2[m fix bug
+[33maa30b26d[m change slogan on banner
+[33m3b0a0cca[m fix bug
+[33m71bff2d7[m resize FL image
+[33m5ae3cd10[m fix iframes for MD projects
+[33mfe7230c2[m[33m ([m[1;31morigin/deprag[m[33m, [m[1;32mdeprag[m[33m)[m move portfoliopage.jsx to /pages
+[33md925a4fc[m initial upload
+[33m7c7e46d8[m Initial commit on deprag branch
