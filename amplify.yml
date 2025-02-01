@@ -25,10 +25,6 @@ frontend:
     headers:
       - key: 'Content-Type'
         value: 'application/javascript; charset=utf-8'
-  - pattern: '**/*.jsx'
-    headers:
-      - key: 'Content-Type'
-        value: 'application/javascript; charset=utf-8'
   redirects:
     - source: '^[^.]+$'
       target: '/index.html'
