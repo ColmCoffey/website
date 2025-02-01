@@ -19,7 +19,3 @@ frontend:
         - key: 'Content-Type'
           value: 'application/javascript; charset=utf-8'
 
-  redirects:
-    - source: '^[^.]+$'
-      target: '/index.html'
-      status: '200'
