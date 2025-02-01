@@ -16,15 +16,7 @@ frontend:
       headers:
         - key: 'Content-Type'
           value: 'application/javascript; charset=utf-8'
-    - pattern: '**/*'
-      headers:
-        - key: 'Cache-Control'
-          value: 'no-store'
-  customHeaders:
-  - pattern: '**/*.js'
-    headers:
-      - key: 'Content-Type'
-        value: 'application/javascript; charset=utf-8'
+
   redirects:
     - source: '^[^.]+$'
       target: '/index.html'
