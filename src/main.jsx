@@ -6,10 +6,17 @@ import PortfolioPage from "./pages/PortfolioPage";
 
 // Project route configuration
 const projectRoutes = {
+  PD_RAG: {
+    githubRepo: "https://github.com/ColmCoffey/PD_Rag",
+    markdownPath: "README.md",
+    isInteractive: true,
+    apiEndpoint: "https://your-pd-rag-api-endpoint.lambda-url.eu-central-1.on.aws" // Replace with actual PD_RAG endpoint
+  },
   deprag: {
     githubRepo: "https://github.com/ColmCoffey/RAG-Deployment",
     markdownPath: "README.md",
-    isInteractive: true  // This should show RAG interface
+    isInteractive: true,
+    apiEndpoint: "https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws"
   },
   microservices: {
     githubRepo: "https://github.com/ColmCoffey/Modular-Architecture-Serverless-Microservices",
@@ -38,11 +45,6 @@ const projectRoutes = {
   endodetect: {
     githubRepo: "https://github.com/ColmCoffey/endodetect",
     markdownPath: "README.md"
-  },
-  PD_RAG: {
-    githubRepo: "https://github.com/ColmCoffey/PD_Rag",
-    markdownPath: "README.md",
-    isInteractive: true
   }
 };
 

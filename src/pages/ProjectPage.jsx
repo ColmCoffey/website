@@ -119,7 +119,7 @@ const ProjectPage = ({ projectRoutes }) => {
                 Ask questions about our services and get instant answers powered by our AI knowledge base.
               </p>
             </div>
-            <RAGInterface />
+            <RAGInterface apiEndpoint={projectRoutes[projectId]?.apiEndpoint} />
           </div>
         )}
         

@@ -30,13 +30,7 @@ const SAMPLE_QUERIES = [
   "What are the latest treatment developments for cervical dystonia?",
 ];
 
-const BASE_URL = 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws';
-const ENDPOINTS = {
-  submit: `${BASE_URL}/submit_query`,
-  getResult: (id) => `${BASE_URL}/get_query?query_id=${id}`
-};
-
-const EnhancedRAGInterface = () => {
+const EnhancedRAGInterface = ({ apiEndpoint }) => {
   const [query, setQuery] = useState('');
   const [workingNotes, setWorkingNotes] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +39,12 @@ const EnhancedRAGInterface = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [queryId, setQueryId] = useState('');
   const [queryHistory, setQueryHistory] = useState([]);
+  
+  const BASE_URL = apiEndpoint || 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws';
+  const ENDPOINTS = {
+    submit: `${BASE_URL}/submit_query`,
+    getResult: (id) => `${BASE_URL}/get_query?query_id=${id}`
+  };
 
   const submitQuery = async (queryText = query) => {
     if (!queryText.trim()) return;
