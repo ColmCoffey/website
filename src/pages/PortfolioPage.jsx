@@ -33,6 +33,17 @@ const PortfolioPage = () => {
       route: 'deprag',
     },
 
+    // Add after your first project (the Custom RAG Deployment)
+    {
+      title: 'Knowledge Base for Parkinson\'s Disease Research',
+      description: 'A specialized knowledge retrieval system for Parkinson\'s Disease literature, enabling researchers to quickly access relevant information and insights.',
+      image: '../assets/DepRag_architecture.png', // Placeholder - replace with actual image
+      tags: ['RAG', 'Healthcare', 'AI', 'Research', 'LLM'],
+      githubLink: 'https://github.com/ColmCoffey/PD_Rag',
+      isInteractive: true,
+      route: 'PD_RAG',
+    },
+
     {
       title: 'Microservice Architecture',
       description: 'Modular serverless microservices architecture for scalable healthcare applications.',
@@ -96,8 +107,8 @@ const PortfolioPage = () => {
     }
   ];
   
-  const tags = ['All', 'Healthcare', 'AI', 'AWS', 'ML', 'Diagnostics', 'DevOps', 'React', 'RAG', 'Cybersecurity', 'VR', 'Vue'];
-  
+// After
+const tags = ['All', 'Healthcare', 'AI', 'AWS', 'ML', 'Diagnostics', 'DevOps', 'React', 'RAG', 'Cybersecurity', 'VR', 'Vue', 'Research', 'LLM'];  
 
   const filteredProjects = selectedTag === 'All' ? projects : projects.filter(project => project.tags.includes(selectedTag));
 

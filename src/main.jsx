@@ -38,6 +38,11 @@ const projectRoutes = {
   endodetect: {
     githubRepo: "https://github.com/ColmCoffey/endodetect",
     markdownPath: "README.md"
+  },
+  PD_RAG: {
+    githubRepo: "https://github.com/ColmCoffey/PD_Rag",
+    markdownPath: "README.md",
+    isInteractive: true
   }
 };
 
