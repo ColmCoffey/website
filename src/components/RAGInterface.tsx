@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent } from './ui/card';
-import { Loader2, Copy, Share2, RefreshCw, History, AlertCircle, Info, CheckCircle } from 'lucide-react';
+import { Loader2, Copy, RefreshCw, History, AlertCircle, CheckCircle } from 'lucide-react';
+import { RAGInterfaceProps, RAGResponse, QueryHistoryItem } from '../types/project';
 
-const StatusMessage = ({ status, message }) => {
+interface StatusMessageProps {
+  status: 'loading' | 'success' | 'error' | null;
+  message: string;
+}
+
+const StatusMessage = ({ status, message }: StatusMessageProps) => {
   const icons = {
     loading: <Loader2 className="h-5 w-5 animate-spin text-blue-500" />,
     success: <CheckCircle className="h-5 w-5 text-green-500" />,
@@ -23,7 +29,7 @@ const StatusMessage = ({ status, message }) => {
   ) : null;
 };
 
-const DEFAULT_SAMPLE_QUERIES = {
+const DEFAULT_SAMPLE_QUERIES: Record<string, string[]> = {
   cervicalDystonia: [
     "What are the main symptoms of cervical dystonia?",
     "What is the role of botulinum toxin in treating cervical dystonia?",
@@ -43,15 +49,14 @@ const RAGInterface = ({
   topic = 'cervicalDystonia',
   customSampleQueries,
   placeholder = "Ask a question..."
-}) => {
-  const [query, setQuery] = useState('');
-  const [workingNotes, setWorkingNotes] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [statusMessage, setStatusMessage] = useState('');
-  const [queryId, setQueryId] = useState('');
-  const [queryHistory, setQueryHistory] = useState([]);
+}: RAGInterfaceProps) => {
+  const [query, setQuery] = useState<string>('');
+  const [workingNotes, setWorkingNotes] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [result, setResult] = useState<RAGResponse | null>(null);
+  const [status, setStatus] = useState<'loading' | 'success' | 'error' | null>(null);
+  const [statusMessage, setStatusMessage] = useState<string>('');
+  const [queryHistory, setQueryHistory] = useState<QueryHistoryItem[]>([]);
 
   // Load query history from localStorage on component mount
   useEffect(() => {
@@ -68,53 +73,17 @@ const RAGInterface = ({
 
   const ENDPOINTS = {
     submit: `${apiEndpoint}/submit_query`,
-    getResult: (id) => `${apiEndpoint}/get_query?query_id=${id}`
+    getResult: (id: string) => `${apiEndpoint}/get_query?query_id=${id}`
   };
 
   const sampleQueries = customSampleQueries || DEFAULT_SAMPLE_QUERIES[topic] || [];
 
-  const submitQuery = async (queryText = query) => {
-    if (!queryText.trim()) return;
-
-    // Reset states
-    setIsLoading(true);
-    setStatus('loading');
-    setStatusMessage('Submitting query...');
-    setResult(null);
-    setWorkingNotes('Processing query...');
-
-    try {
-      const response = await fetch(ENDPOINTS.submit, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query_text: queryText }),
-      });
-
-      if (!response.ok) throw new Error('Failed to submit query');
-
-      const data = await response.json();
-      setQueryId(data.query_id);
-      setQueryHistory(prev => [
-        { text: queryText, timestamp: Date.now(), id: data.query_id },
-        ...prev.slice(0, 4),
-      ]);
-      
-      startPolling(data.query_id);
-      setWorkingNotes('Query submitted successfully. Retrieving relevant documents...');
-    } catch (err) {
-      setStatus('error');
-      setStatusMessage('Error submitting query: ' + err.message);
-      setIsLoading(false);
-      setWorkingNotes('Error occurred while processing query.');
-    }
-  };
-
-  const checkResult = async (id) => {
+  const checkResult = useCallback(async (id: string): Promise<boolean> => {
     try {
       const response = await fetch(ENDPOINTS.getResult(id));
       if (!response.ok) throw new Error('Failed to fetch results');
 
-      const data = await response.json();
+      const data: RAGResponse = await response.json();
       
       if (data.is_complete) {
         setResult(data);
@@ -128,18 +97,19 @@ const RAGInterface = ({
       setWorkingNotes(`Still processing... analyzing ${topic} literature.`);
       return false;
     } catch (err) {
+      const error = err as Error;
       setStatus('error');
-      setStatusMessage('Error checking results: ' + err.message);
+      setStatusMessage('Error checking results: ' + error.message);
       setIsLoading(false);
       setWorkingNotes('Error occurred while retrieving results.');
       return true;
     }
-  };
+  }, [ENDPOINTS, topic]);
 
-  const startPolling = async (id) => {
+  const startPolling = useCallback(async (id: string) => {
     let attempts = 0;
     const maxAttempts = 30;
-    let pollInterval;
+    let pollInterval: NodeJS.Timeout;
     
     const cleanup = () => {
       if (pollInterval) {
@@ -164,8 +134,43 @@ const RAGInterface = ({
       }
     }, 1000);
 
-    // Cleanup on component unmount
     return cleanup;
+  }, [checkResult]);
+
+  const submitQuery = async (queryText: string = query) => {
+    if (!queryText.trim()) return;
+
+    // Reset states
+    setIsLoading(true);
+    setStatus('loading');
+    setStatusMessage('Submitting query...');
+    setResult(null);
+    setWorkingNotes('Processing query...');
+
+    try {
+      const response = await fetch(ENDPOINTS.submit, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query_text: queryText }),
+      });
+
+      if (!response.ok) throw new Error('Failed to submit query');
+
+      const data = await response.json();
+      setQueryHistory(prev => [
+        { text: queryText, timestamp: Date.now(), id: data.query_id },
+        ...prev.slice(0, 4),
+      ]);
+      
+      startPolling(data.query_id);
+      setWorkingNotes('Query submitted successfully. Retrieving relevant documents...');
+    } catch (err) {
+      const error = err as Error;
+      setStatus('error');
+      setStatusMessage('Error submitting query: ' + error.message);
+      setIsLoading(false);
+      setWorkingNotes('Error occurred while processing query.');
+    }
   };
 
   return (
@@ -237,13 +242,13 @@ const RAGInterface = ({
             {status && <StatusMessage status={status} message={statusMessage} />}
 
             {/* Results */}
-            {result && (
+            {result && result.answer_text && (
               <div className="space-y-4">
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-semibold">Answer:</h3>
                     <button
-                      onClick={() => navigator.clipboard.writeText(result.answer)}
+                      onClick={() => navigator.clipboard.writeText(result.answer_text || '')}
                       className="p-1 hover:bg-gray-200 rounded"
                       title="Copy answer"
                     >
@@ -253,7 +258,7 @@ const RAGInterface = ({
                   <p className="whitespace-pre-wrap text-gray-700">{result.answer_text}</p>
                 </div>
 
-                {result.sources?.length > 0 && (
+                {result.sources && result.sources.length > 0 && (
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h3 className="font-semibold mb-2">References:</h3>
                     <ul className="list-disc list-inside space-y-1">

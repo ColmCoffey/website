@@ -1,8 +1,14 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlayCircle } from 'lucide-react';
+import { Project } from '@/types/project';
 
-const ProjectCard = ({ project, onClick }) => {
+interface ProjectCardProps {
+  project: Project;
+  onClick: () => void;
+}
+
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
   return (
     <Card className="card-container relative group cursor-pointer" onClick={onClick}>
       <CardHeader>

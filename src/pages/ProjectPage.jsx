@@ -7,25 +7,27 @@ import RAGInterface from '../components/RAGInterface';
 import { cn } from "../components/ui/lib/utils";
 import 'github-markdown-css/github-markdown.css';
 import "../index.css";
+import { projectRoutes } from '../config/projects';
 
-const ProjectPage = ({ projectRoutes }) => {
+const ProjectPage = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const isInteractive = projectRoutes[projectId]?.isInteractive || false;
+  const projectConfig = projectRoutes[projectId];
+  const isInteractive = projectConfig?.isInteractive || false;
 
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        if (!projectRoutes[projectId]) {
+        if (!projectConfig) {
           navigate('/');
           return;
         }
 
-        const { githubRepo, markdownPath } = projectRoutes[projectId];
+        const { githubRepo, markdownPath } = projectConfig;
         const [_, owner, repo] = githubRepo.match(/github\.com\/([^/]+)\/([^/]+)/);
         
         const branches = ['main', 'master'];
@@ -61,7 +63,7 @@ const ProjectPage = ({ projectRoutes }) => {
     };
 
     fetchContent();
-  }, [projectId, projectRoutes, navigate]);
+  }, [projectId, projectConfig, navigate]);
 
   const Header = () => (
     <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
@@ -71,6 +73,7 @@ const ProjectPage = ({ projectRoutes }) => {
           alt="Logo"
           className="h-12 rounded-full bg-white p-1 shadow-lg cursor-pointer"
           onClick={() => navigate("/")}
+          loading="lazy"
         />
         <h1 className="text-3xl font-bold capitalize">{projectId}</h1>
       </div>
@@ -119,7 +122,7 @@ const ProjectPage = ({ projectRoutes }) => {
                 Ask questions about our services and get instant answers powered by our AI knowledge base.
               </p>
             </div>
-            <RAGInterface apiEndpoint={projectRoutes[projectId]?.apiEndpoint} />
+            <RAGInterface apiEndpoint={projectConfig?.apiEndpoint} />
           </div>
         )}
         
@@ -154,6 +157,13 @@ const ProjectPage = ({ projectRoutes }) => {
                     {props.children}
                   </a>
                 ),
+                img: ({ node, ...props }) => (
+                  <img
+                    {...props}
+                    loading="lazy"
+                    className="max-w-full h-auto"
+                  />
+                ),
               }}
             />
           </article>
@@ -162,7 +172,7 @@ const ProjectPage = ({ projectRoutes }) => {
 
       <footer className="text-center mt-8 pb-8">
         <a
-          href={projectRoutes[projectId]?.githubRepo}
+          href={projectConfig?.githubRepo}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary inline-block"
