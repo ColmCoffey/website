@@ -7,7 +7,7 @@ import RAGInterface from '../components/RAGInterface';
 import { cn } from "../components/ui/lib/utils";
 import 'github-markdown-css/github-markdown.css';
 import "../index.css";
-import { projectRoutes, projects } from '../config/projects';
+import { projectRoutes, projects } from '../config/projects.ts';
 import NavBar from '../components/NavBar';
 
 const ProjectPage = () => {

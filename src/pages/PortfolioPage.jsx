@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Github, Linkedin, PlayCircle } from 'lucide-react';
 import '../index.css';
 import { useNavigate } from 'react-router-dom';
-import { projects } from '../config/projects';
+import { projects } from '../config/projects.ts';
 import NavBar from '../components/NavBar';
 import SkeletonCard from '../components/ui/SkeletonCard';
 import ProjectCard from '../components/ui/projectcard';
