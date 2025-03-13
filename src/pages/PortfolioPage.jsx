@@ -16,12 +16,23 @@ const PortfolioPage = () => {
   const [currentProject, setCurrentProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Extract unique tags from projects
-  const tags = ['All', ...new Set(projects.flatMap(project => project.tags))];
+  // Define main categories for filtering
+  const mainCategories = ['All', 'AI/ML', 'Healthcare', 'AWS', 'DevOps'];
+  
+  // Map all tags to main categories for filtering
+  const mapTagToCategory = (tag) => {
+    if (tag === 'RAG' || tag === 'ML' || tag === 'LLM' || tag === 'AI') return 'AI/ML';
+    if (tag === 'Healthcare' || tag === 'Diagnostics') return 'Healthcare';
+    if (tag === 'AWS' || tag === 'Serverless') return 'AWS';
+    if (tag === 'DevOps' || tag === 'Microservices') return 'DevOps';
+    return tag;
+  };
 
   const filteredProjects = selectedTag === 'All' 
     ? projects 
-    : projects.filter(project => project.tags.includes(selectedTag));
+    : projects.filter(project => 
+        project.tags.some(tag => mapTagToCategory(tag) === selectedTag)
+      );
 
   // Organize projects to avoid empty spaces
   const organizeProjects = (projects) => {
@@ -87,14 +98,18 @@ const PortfolioPage = () => {
       <section className="py-6 bg-gray-100 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <h3 className="text-lg font-semibold mb-4 text-center">Filter Projects</h3>
-          <div className="flex flex-nowrap overflow-x-auto pb-4 md:flex-wrap md:justify-center gap-2 md:overflow-visible md:pb-0">
-            {tags.map(tag => (
+          <div className="flex flex-wrap justify-center gap-2">
+            {mainCategories.map(category => (
               <button
-                key={tag}
-                className={`px-3 py-1 whitespace-nowrap btn-primary ${selectedTag === tag ? 'bg-indigo-700 dark:bg-indigo-600' : ''}`}
-                onClick={() => setSelectedTag(tag)}
+                key={category}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedTag === category 
+                    ? 'bg-indigo-600 text-white' 
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-gray-600'
+                }`}
+                onClick={() => setSelectedTag(category)}
               >
-                {tag}
+                {category}
               </button>
             ))}
           </div>

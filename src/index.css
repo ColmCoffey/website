@@ -113,6 +113,7 @@ body {
   overflow: hidden;
   border-radius: 0.5rem;
   max-height: 160px;
+  width: 100%;
 }
 
 .project-image {
@@ -226,5 +227,11 @@ body {
   
   .social-icon {
     margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-image-container {
+    max-height: 120px;
   }
 }

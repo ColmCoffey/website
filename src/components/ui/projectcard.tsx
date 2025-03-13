@@ -29,9 +29,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
       <CardHeader className="pb-2">
         <CardTitle 
           id={`project-title-${projectId}`}
-          className="flex items-center justify-between"
+          className="flex items-center justify-between flex-wrap gap-2"
         >
-          {project.title}
+          <span className="mr-auto">{project.title}</span>
           {project.isInteractive && (
             <div className="flex items-center gap-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full text-sm"
                  aria-label="Interactive demonstration available">
@@ -44,7 +44,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
       <CardContent className="flex flex-col justify-between h-[calc(100%-4rem)]">
         <div>
           <p className="line-clamp-3 mb-4">{project.description}</p>
-          <div className="project-image-container h-[160px] overflow-hidden">
+          <div className="project-image-container h-[120px] sm:h-[160px] overflow-hidden">
             <ProgressiveImage 
               src={project.image} 
               alt={project.title} 
