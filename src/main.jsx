@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProjectPage from './pages/ProjectPage';
 import PortfolioPage from "./pages/PortfolioPage";
+import { ThemeProvider } from './contexts/ThemeProvider';
 
 // Project route configuration
 const projectRoutes = {
@@ -10,7 +11,8 @@ const projectRoutes = {
     githubRepo: "https://github.com/ColmCoffey/PD_Rag",
     markdownPath: "README.md",
     isInteractive: true,
-    apiEndpoint: "https://your-pd-rag-api-endpoint.lambda-url.eu-central-1.on.aws" // Replace with actual PD_RAG endpoint
+    apiEndpoint: "https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws",
+    topic: "Parkinson's Disease"
   },
   deprag: {
     githubRepo: "https://github.com/ColmCoffey/RAG-Deployment",
@@ -50,11 +52,13 @@ const projectRoutes = {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<PortfolioPage />} />
-        <Route path="/:projectId" element={<ProjectPage projectRoutes={projectRoutes} />} />
-      </Routes>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<PortfolioPage />} />
+          <Route path="/:projectId" element={<ProjectPage projectRoutes={projectRoutes} />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   </React.StrictMode>
 );

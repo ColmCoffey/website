@@ -7,7 +7,8 @@ import RAGInterface from '../components/RAGInterface';
 import { cn } from "../components/ui/lib/utils";
 import 'github-markdown-css/github-markdown.css';
 import "../index.css";
-import { projectRoutes } from '../config/projects';
+import { projectRoutes, projects } from '../config/projects';
+import NavBar from '../components/NavBar';
 
 const ProjectPage = () => {
   const { projectId } = useParams();
@@ -18,6 +19,9 @@ const ProjectPage = () => {
   
   const projectConfig = projectRoutes[projectId];
   const isInteractive = projectConfig?.isInteractive || false;
+  
+  // Find the project title from the projects array
+  const projectTitle = projects.find(p => p.route === projectId)?.title || projectId;
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -65,27 +69,17 @@ const ProjectPage = () => {
     fetchContent();
   }, [projectId, projectConfig, navigate]);
 
-  const Header = () => (
-    <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
-      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
-        <img
-          src="/assets/logo.png"
-          alt="Logo"
-          className="h-12 rounded-full bg-white p-1 shadow-lg cursor-pointer"
-          onClick={() => navigate("/")}
-          loading="lazy"
-        />
-        <h1 className="text-3xl font-bold capitalize">{projectId}</h1>
-      </div>
-    </header>
-  );
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <NavBar />
+        <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
+          <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
+            <h1 className="text-3xl font-bold">{projectTitle}</h1>
+          </div>
+        </header>
         <div className="flex items-center justify-center h-[60vh]">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600 dark:border-blue-400"></div>
         </div>
       </div>
     );
@@ -93,8 +87,13 @@ const ProjectPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Header />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <NavBar />
+        <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
+          <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
+            <h1 className="text-3xl font-bold">{projectTitle}</h1>
+          </div>
+        </header>
         <div className="flex flex-col items-center justify-center h-[60vh] gap-6">
           <div className="text-red-500 text-xl text-center max-w-md">
             <p>{error}</p>
@@ -111,23 +110,31 @@ const ProjectPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />    
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <NavBar />
+      <header className="relative bg-gradient-to-br from-gray-800 to-blue-600 text-white shadow-lg py-16">
+        <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
+          <h1 className="text-3xl font-bold">{projectTitle}</h1>
+        </div>
+      </header>
       <main className="max-w-4xl mx-auto py-8 px-4">
         {isInteractive && (
-          <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-            <div className="prose max-w-none mb-8">
+          <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-8">
+            <div className="prose dark:prose-invert max-w-none mb-8">
               <h2 className="text-2xl font-bold mb-4">Interactive RAG Demo</h2>
-              <p className="text-gray-600 mb-6">
-                Ask questions about our services and get instant answers powered by our AI knowledge base.
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Ask questions about {projectConfig?.topic || 'our services'} and get instant answers powered by our AI knowledge base.
               </p>
             </div>
-            <RAGInterface apiEndpoint={projectConfig?.apiEndpoint} />
+            <RAGInterface 
+              apiEndpoint={projectConfig?.apiEndpoint} 
+              topic={projectConfig?.topic === 'Cervical Dystonia' ? 'cervicalDystonia' : 'parkinsons'}
+            />
           </div>
         )}
         
-        <div className="bg-white shadow-md rounded-lg p-6">
-          <article className="markdown-body">
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+          <article className="markdown-body dark:bg-gray-800 dark:text-gray-100">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
@@ -136,7 +143,7 @@ const ProjectPage = () => {
                 code({ node, inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || "");
                   return !inline && match ? (
-                    <pre>
+                    <pre className="dark:bg-gray-900">
                       <code className={className} {...props}>
                         {children}
                       </code>
@@ -149,7 +156,7 @@ const ProjectPage = () => {
                 },
                 a: ({ node, ...props }) => (
                   <a 
-                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline"
                     target="_blank"
                     rel="noopener noreferrer"
                     {...props}

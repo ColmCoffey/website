@@ -2,10 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables for theming */
+:root {
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --bg-primary: #f9fafb;
+  --bg-secondary: #f3f4f6;
+}
+
+.dark {
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+}
+
 /* General styles */
 body {
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors;
+}
+
+/* Typography */
+@layer base {
+  h1 {
+    @apply text-4xl md:text-5xl font-bold tracking-tight leading-tight;
+  }
+  
+  h2 {
+    @apply text-3xl font-bold tracking-tight leading-tight;
+  }
+  
+  h3 {
+    @apply text-2xl font-semibold tracking-tight leading-snug;
+  }
+  
+  p {
+    @apply text-gray-700 dark:text-gray-300 leading-relaxed;
+  }
+  
+  .card-title {
+    @apply text-xl font-semibold leading-tight;
+  }
 }
 
 /* Header animation */
@@ -27,21 +72,76 @@ body {
 
 /* Buttons */
 .btn-primary {
-  @apply bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 transition-transform hover:scale-105;
+  @apply bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 
+    transition-transform hover:scale-105 focus:outline-none focus:ring-2 
+    focus:ring-blue-500 focus:ring-offset-2;
 }
 
 .btn-secondary {
-  @apply bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 transition-transform hover:scale-105;
+  @apply bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50 
+    transition-transform hover:scale-105 focus:outline-none focus:ring-2 
+    focus:ring-blue-500 focus:ring-offset-2;
 }
 
 /* Card styles */
 .card-container {
-  @apply overflow-visible border border-gray-300 hover:shadow-lg transition-shadow rounded-lg;
+  @apply overflow-visible border border-gray-300 dark:border-gray-700 
+    hover:shadow-lg transition-all duration-300 rounded-lg;
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--text-primary);
+  transform: translateY(0);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-container:hover {
+  transform: translateY(-4px);
+  @apply border-blue-300 dark:border-blue-700;
+}
+
+.card-container:focus {
+  outline: none;
+  @apply shadow-lg ring-2 ring-blue-500 ring-opacity-50;
+}
+
+/* Project image container */
+.project-image-container {
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  max-height: 160px;
+}
+
+.project-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Add subtle zoom effect on hover */
+.card-container:hover .project-image {
+  transform: scale(1.05);
+}
+
+/* Featured card styles */
+.featured-card {
+  @apply border-2 border-blue-400 dark:border-blue-600;
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1);
+}
+
+.featured-card .card-title {
+  @apply text-blue-600 dark:text-blue-400;
 }
 
 /* Tags */
 .tag {
-  @apply bg-blue-100 text-blue-600 text-xs font-medium px-2.5 py-0.5 rounded;
+  @apply bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-blue-200 
+    text-xs font-medium px-2.5 py-0.5 rounded;
 }
 
 /* Social Icon Styling */
@@ -70,23 +170,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Utility class for custom borders */
-@layer utilities {
-  .border-border {
-    border-color: theme('colors.border');
-  }
-}
-
-/* Mobile responsiveness fixes */
-@media (max-width: 768px) {
-  .btn-primary, .btn-secondary {
-    margin-bottom: 0.5rem;
-  }
-  .social-icon {
-    margin-bottom: 0.5rem;
-  }
-}
-
+/* Modal styles */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -94,6 +178,7 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -107,9 +192,21 @@ body {
   max-width: 600px;
   position: relative;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
 }
 
+@keyframes modal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
+/* Markdown styles */
 .markdown-body {
   box-sizing: border-box;
   min-width: 200px;
@@ -121,5 +218,13 @@ body {
 @media (max-width: 767px) {
   .markdown-body {
     padding: 15px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    margin-bottom: 0.5rem;
+  }
+  
+  .social-icon {
+    margin-bottom: 0.5rem;
   }
 }

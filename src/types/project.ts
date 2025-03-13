@@ -5,6 +5,7 @@ export interface Project {
   tags: string[];
   githubLink: string;
   isInteractive?: boolean;
+  featured?: boolean;
   route: string;
   apiEndpoint?: string;
 }
@@ -14,6 +15,7 @@ export interface ProjectRoute {
   markdownPath: string;
   isInteractive?: boolean;
   apiEndpoint?: string;
+  topic?: string;
 }
 
 export interface ProjectConfig {

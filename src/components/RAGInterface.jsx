@@ -10,9 +10,9 @@ const StatusMessage = ({ status, message }) => {
   };
 
   const statusClasses = {
-    loading: 'bg-blue-50 border-blue-200 text-blue-800',
-    success: 'bg-green-50 border-green-200 text-green-800',
-    error: 'bg-red-50 border-red-200 text-red-800',
+    loading: 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200',
+    success: 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200',
+    error: 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200',
   };
 
   return status ? (
@@ -175,8 +175,8 @@ const RAGInterface = ({
           <div className="space-y-6">
             {/* Sample Queries */}
             {sampleQueries.length > 0 && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-semibold mb-2">Sample Queries:</h3>
+              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                <h3 className="font-semibold mb-2 dark:text-gray-200">Sample Queries:</h3>
                 <div className="flex flex-wrap gap-2">
                   {sampleQueries.map((sampleQuery, index) => (
                     <button
@@ -185,7 +185,7 @@ const RAGInterface = ({
                         setQuery(sampleQuery);
                         submitQuery(sampleQuery);
                       }}
-                      className="bg-white px-3 py-1 rounded-full text-sm border hover:bg-blue-50 transition-colors"
+                      className="bg-white dark:bg-gray-600 px-3 py-1 rounded-full text-sm border dark:border-gray-500 hover:bg-blue-50 dark:hover:bg-gray-500 transition-colors dark:text-gray-200"
                       disabled={isLoading}
                     >
                       {sampleQuery}
@@ -197,41 +197,35 @@ const RAGInterface = ({
 
             {/* Query Input */}
             <div className="flex flex-col space-y-2">
-              <label className="font-semibold">Query Input:</label>
-              <textarea
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={placeholder}
-                className="w-full p-3 border rounded-md h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                disabled={isLoading}
-              />
+              <label className="font-semibold dark:text-gray-200">Query Input:</label>
+              <div className="flex">
+                <textarea
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={placeholder}
+                  className="flex-1 p-3 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+                  rows={3}
+                  disabled={isLoading}
+                />
+                <button
+                  onClick={() => submitQuery()}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md disabled:opacity-50"
+                  disabled={!query.trim() || isLoading}
+                >
+                  {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Submit'}
+                </button>
+              </div>
             </div>
 
             {/* Working Notes */}
             <div className="flex flex-col space-y-2">
-              <label className="font-semibold">Working Notes:</label>
+              <label className="font-semibold dark:text-gray-200">Working Notes:</label>
               <textarea
                 value={workingNotes}
                 readOnly
-                className="w-full p-3 border rounded-md h-24 bg-gray-50"
+                className="w-full p-3 border rounded-md h-24 bg-gray-50 dark:bg-gray-700 dark:text-gray-200"
               />
             </div>
-
-            {/* Submit Button */}
-            <button
-              onClick={() => submitQuery()}
-              disabled={isLoading || !query.trim()}
-              className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                'Submit Query'
-              )}
-            </button>
 
             {/* Status Message */}
             {status && <StatusMessage status={status} message={statusMessage} />}
@@ -239,26 +233,26 @@ const RAGInterface = ({
             {/* Results */}
             {result && (
               <div className="space-y-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold">Answer:</h3>
+                    <h3 className="font-semibold dark:text-gray-200">Answer:</h3>
                     <button
                       onClick={() => navigator.clipboard.writeText(result.answer)}
-                      className="p-1 hover:bg-gray-200 rounded"
+                      className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded"
                       title="Copy answer"
                     >
-                      <Copy className="h-4 w-4" />
+                      <Copy className="h-4 w-4 dark:text-gray-200" />
                     </button>
                   </div>
-                  <p className="whitespace-pre-wrap text-gray-700">{result.answer_text}</p>
+                  <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-200">{result.answer_text}</p>
                 </div>
 
                 {result.sources?.length > 0 && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-semibold mb-2">References:</h3>
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <h3 className="font-semibold mb-2 dark:text-gray-200">References:</h3>
                     <ul className="list-disc list-inside space-y-1">
                       {result.sources.map((source, index) => (
-                        <li key={index} className="text-sm text-gray-600">
+                        <li key={index} className="text-sm text-gray-600 dark:text-gray-300">
                           {source}
                         </li>
                       ))}
@@ -270,8 +264,8 @@ const RAGInterface = ({
 
             {/* Query History */}
             {queryHistory.length > 0 && (
-              <div className="border-t pt-4">
-                <h3 className="font-semibold mb-2 flex items-center">
+              <div className="border-t dark:border-gray-600 pt-4">
+                <h3 className="font-semibold mb-2 flex items-center dark:text-gray-200">
                   <History className="h-4 w-4 mr-1" />
                   Recent Queries:
                 </h3>
@@ -279,7 +273,7 @@ const RAGInterface = ({
                   {queryHistory.map((item, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between text-sm text-gray-600"
+                      className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300"
                     >
                       <span>{item.text}</span>
                       <button
@@ -287,7 +281,7 @@ const RAGInterface = ({
                           setQuery(item.text);
                           submitQuery(item.text);
                         }}
-                        className="ml-2 p-1 hover:bg-gray-100 rounded"
+                        className="ml-2 p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
                         disabled={isLoading}
                       >
                         <RefreshCw className="h-4 w-4" />

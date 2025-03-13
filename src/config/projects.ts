@@ -1,16 +1,17 @@
 import { Project, ProjectRoute } from '../types/project';
 
 export const projects: Project[] = [
-  {
-    title: 'Custom RAG Deployment with AWS',
-    description: 'Serverless RAG architecture for medical knowledge retrieval, specializing in Cervical Dystonia literature. Built with AWS Bedrock, ChromaDB, and FastAPI.',
-    image: '/assets/DepRag_architecture.png',
-    tags: ['AWS', 'RAG', 'Healthcare', 'AI', 'Serverless'],
-    githubLink: 'https://github.com/colmcoffey/RAG-Deployment',
-    isInteractive: true,
-    route: 'deprag',
-    apiEndpoint: 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws'
-  },
+  // {
+  //   title: 'Custom RAG Deployment with AWS',
+  //   description: 'Serverless RAG architecture for medical knowledge retrieval, specializing in Cervical Dystonia literature. Built with AWS Bedrock, ChromaDB, and FastAPI.',
+  //   image: '/assets/DepRag_architecture.png',
+  //   tags: ['AWS', 'RAG', 'Healthcare', 'AI', 'Serverless'],
+  //   githubLink: 'https://github.com/colmcoffey/RAG-Deployment',
+  //   isInteractive: true,
+  //   featured: true,
+  //   route: 'deprag',
+  //   apiEndpoint: 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws'
+  // },
   {
     title: 'Knowledge Base for Parkinson\'s Disease Research',
     description: 'A specialized knowledge retrieval system for Parkinson\'s Disease literature, enabling researchers to quickly access relevant information and insights.',
@@ -18,8 +19,9 @@ export const projects: Project[] = [
     tags: ['RAG', 'Healthcare', 'AI', 'Research', 'LLM'],
     githubLink: 'https://github.com/ColmCoffey/PD_Rag',
     isInteractive: true,
+    featured: true,
     route: 'PD_RAG',
-    apiEndpoint: 'https://your-pd-rag-endpoint.aws'
+    apiEndpoint: 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws'
   },
   {
     title: 'Microservice Architecture',
@@ -84,13 +86,15 @@ export const projectRoutes: Record<string, ProjectRoute> = {
     githubRepo: 'https://github.com/colmcoffey/RAG-Deployment',
     markdownPath: 'README.md',
     isInteractive: true,
-    apiEndpoint: 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws'
+    apiEndpoint: 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws',
+    topic: 'Cervical Dystonia'
   },
   PD_RAG: {
     githubRepo: 'https://github.com/ColmCoffey/PD_Rag',
     markdownPath: 'README.md',
     isInteractive: true,
-    apiEndpoint: 'https://your-pd-rag-endpoint.aws'
+    apiEndpoint: 'https://pp7ize56fqejnegjiuknrv3hbu0ijyij.lambda-url.eu-central-1.on.aws',
+    topic: 'Parkinson\'s Disease'
   },
   microservices: {
     githubRepo: 'https://github.com/ColmCoffey/Modular-Architecture-Serverless-Microservices',
