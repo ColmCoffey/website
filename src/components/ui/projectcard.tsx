@@ -29,9 +29,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
       <CardHeader className="pb-2">
         <CardTitle 
           id={`project-title-${projectId}`}
-          className="flex items-center justify-between flex-wrap gap-2"
+          className="flex items-center justify-between"
         >
-          <span className="mr-auto">{project.title}</span>
+          {project.title}
           {project.isInteractive && (
             <div className="flex items-center gap-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded-full text-sm"
                  aria-label="Interactive demonstration available">

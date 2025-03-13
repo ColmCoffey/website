@@ -16,15 +16,14 @@ const PortfolioPage = () => {
   const [currentProject, setCurrentProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Define main categories for filtering
-  const mainCategories = ['All', 'AI/ML', 'Healthcare', 'AWS', 'DevOps'];
+  // Define simplified categories for filtering
+  const mainCategories = ['All', 'AI/ML', 'Healthcare', 'Cloud'];
   
   // Map all tags to main categories for filtering
   const mapTagToCategory = (tag) => {
     if (tag === 'RAG' || tag === 'ML' || tag === 'LLM' || tag === 'AI') return 'AI/ML';
     if (tag === 'Healthcare' || tag === 'Diagnostics') return 'Healthcare';
-    if (tag === 'AWS' || tag === 'Serverless') return 'AWS';
-    if (tag === 'DevOps' || tag === 'Microservices') return 'DevOps';
+    if (tag === 'AWS' || tag === 'Serverless' || tag === 'DevOps' || tag === 'Microservices') return 'Cloud';
     return tag;
   };
 
@@ -80,7 +79,7 @@ const PortfolioPage = () => {
             <img 
               src="/assets/logo.png" 
               alt="Logo" 
-              className="h-16 rounded-full bg-white p-2 shadow-lg mb-4 md:mb-0 md:mr-6" 
+              className="h-16 w-16 rounded-full bg-white dark:bg-gray-800 p-2 shadow-lg mb-4 md:mb-0 md:mr-6 object-contain" 
               loading="lazy"
             />
             <div>
@@ -98,7 +97,7 @@ const PortfolioPage = () => {
       <section className="py-6 bg-gray-100 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <h3 className="text-lg font-semibold mb-4 text-center">Filter Projects</h3>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-3">
             {mainCategories.map(category => (
               <button
                 key={category}
